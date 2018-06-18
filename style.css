@@ -78,12 +78,14 @@ h1, h2, h3, h4, h5, h6{
 #box:hover{
 	background-color: rgba(250,250,250,0.8);
 }
-#box_content h2{
+#box_content p{
 	font-size: 200%;
 	text-align: center;
 	line-height: 50px;
 	color: rgb(255,255,255);
-	margin-left:100px; 
+}
+#box_content :hover{
+	cursor: pointer;
 }
 
 #footer{
@@ -125,8 +127,8 @@ h1, h2, h3, h4, h5, h6{
 	padding-right: 50px;
 }
 #mask{
-	width: 1000px;
-	height: 500px;
+	width: 1200px;
+	height: 600px;
 	margin: 0 auto;
 	background-color: rgba(250, 250, 250, 0.178);
 }
