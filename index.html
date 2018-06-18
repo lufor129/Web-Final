@@ -1,30 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-          $("#mask").hide();
-          $("#box").click(function(){
-            $("#mask").show();
-            $("#middle").hide();
-            $("#head").hide();
-          });
-        });
-        </script>
     <title>高雄 Easy Park</title>
+    <style>
+            #map {
+                height: 100%;
+                width:70%;
+                float: left;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #street{
+                float: left;
+                width:30%;
+                height:95%;
+            }
+            select{
+                width:14%;
+                height:5%;
+            }
+        </style>
 </head>
 <body>
-        
+    
     <div id="wrapper">
         <div id="mask">
-                
-        </div>  
+            <div id="map"></div>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsoDUzZYrgIBKvxoE8623vkToMa-1TI4U&callback=initMap"></script>
+            <select name="" id="carsize">
+                <option value="all">全找</option>
+                <option value="big">大型車</option>
+                <option value="small">小型車</option>
+                <option value="motor">機車</option>
+                <option value="bike">腳踏車</option>
+            </select>
+            <select name="" id="zone">
+                <option value="高雄全區">高雄全區</option>
+                <option value="楠梓區">楠梓區</option>
+                <option value="左營區">左營區</option>
+                <option value="鼓山區">鼓山區</option>
+                <option value="三民區">三民區</option>
+                <option value="鹽埕區">鹽埕區</option>
+                <option value="前金區">前金區</option>
+                <option value="新興區">新興區</option>
+                <option value="苓雅區">苓雅區</option>
+                <option value="前鎮區">前鎮區</option>
+                <option value="旗津區">旗津區</option>
+                <option value="小港區">小港區</option>
+                <option value="鳳山區">鳳山區</option>
+                <option value="大寮區">大寮區</option>
+                <option value="鳥松區">鳥松區</option>
+                <option value="林園區">林園區</option>
+                <option value="仁武區">仁武區</option>
+                <option value="大樹區">大樹區</option>
+                <option value="大社區">大社區</option>
+                <option value="岡山區">岡山區</option>
+                <option value="路竹區">路竹區</option>
+                <option value="橋頭區">橋頭區</option>
+                <option value="梓官區">梓官區</option>
+                <option value="彌陀區">彌陀區</option>
+                <option value="燕巢區">燕巢區</option>
+                <option value="田寮區">田寮區</option>
+                <option value="阿蓮區">阿蓮區</option>
+                <option value="茄萣區">茄萣區</option>
+                <option value="湖內區">湖內區</option>
+                <option value="旗山區">旗山區</option>
+                <option value="美濃區">美濃區</option>
+                <option value="內門區">內門區</option>
+                <option value="杉林區">杉林區</option>
+                <option value="甲仙區">甲仙區</option>
+                <option value="六龜區">六龜區</option>
+                <option value="茂林區">茂林區</option>
+                <option value="桃源區">桃源區</option>
+                <option value="那瑪夏區">那瑪夏區</option> 
+            </select>
+            <div id="street"></div>
+        </div>
         <div id="head">
             <div id="title">
                 <h1>高雄 Parking</h1>
@@ -49,6 +110,107 @@
             </div>
         </div>
     </div>
-    
 </body>
 </html>
+<script>
+        var map;
+        var governpark;
+        var privatepark;
+        var governmarker=[]
+        var privatemarker=[];
+        var privatevehicle=[];
+        var publicvehicle=[];
+        var infowindow;
+        var zone;
+        var carsize;
+        function initMap(){
+            map=new google.maps.Map(document.getElementById("map"),{
+                center: { lat: 22.608111, lng: 120.302475 },
+                zoom: 13,
+                streetViewControl:false
+            });
+            $.getJSON("governpark.json",'parameters/data',function(data){
+                governpark=data;
+                console.log(governpark[0]["經度"]);
+                console.log(governpark[0]["緯度"]);
+                for(var i=0 ;i<governpark.length;i++){
+                    addMarker(i,governpark[i],governmarker,"http://maps.google.com/mapfiles/ms/icons/red-dot.png");
+                }
+            });
+            $.getJSON("privatepark.json",'parameters/data',function(data){
+                privatepark=data;
+                $.each(privatepark,function(i,value){
+                    addMarker(i,value,privatemarker,"http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
+                })
+            });
+        }
+        function addMarker(e,park,markers,icon) {
+            markers[e] = new google.maps.Marker({
+                position: {
+                    lat: Number(park["緯度"]),
+                    lng: Number(park["經度"])
+                },
+                icon:icon,
+                map: map,
+            });
+            markers[e].addListener("click", function () {
+                if (infowindow) {
+                    infowindow.close();
+                }
+                infowindow = new google.maps.InfoWindow();
+                infowindow.setContent("2");
+                //info park[e]
+                infowindow.open(map, markers[e]);
+                markers[e].setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(function () {
+                    markers[e].setAnimation(null)
+                }, 3000);
+                streetview(Number(park["緯度"]),Number(park["經度"]));
+            });
+        }
+        
+        function streetview(lat,lng){
+            var fenway = new google.maps.LatLng(lat, lng);
+            var panoramaOptions = {
+                position: fenway,
+                pov: {
+                heading: 0,
+                pitch: 0,
+                zoom: 1
+                }
+            };
+            var panorama = new  google.maps.StreetViewPanorama(
+            document.getElementById("street"), panoramaOptions);  
+        }
+        $("#carsize").on("change",function(){
+            carsize=$(this).val();
+            console.log(carsize);
+            zone=$("#zone").val();
+            console.log(zone);
+            if(carsize =="big"){
+                
+            }else if(carsize =="small"){
+                console.log(2);
+            }else if(carsize=="motor"){
+                console.log(3);
+            }else if(carsize=="bike"){
+    
+            }else{
+    
+            }
+        });
+        $("#street").on("change",function(){
+            zone=$(this).val();
+            carsize=$("#carsize").val();
+    
+        });
+    
+        $(document).ready(function () {
+            $("#mask").hide();
+            $("#box").click(function () {
+                $("#mask").show();
+                $("#middle").hide();
+                $("#head").hide();
+            });
+        });
+</script>
