@@ -1,0 +1,151 @@
+html, body, div, span, applet, object, iframe,
+ p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	font-family:Microsoft JhengHei;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q { 
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a, a:hover, a:visited, a:hover:visited{
+	color: inherit;
+	text-decoration: none;
+}
+h1, h2, h3, h4, h5, h6{
+	margin: 0;
+	font-family:Microsoft JhengHei;
+	font-weight: normal;
+}
+#clear{
+	clear: both;
+}
+/*============*/
+#wrapper{
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	background: url("http://3.bp.blogspot.com/-D77Zd4MYkOQ/Us_CzCIQF5I/AAAAAAAD97A/ErVumgOSDtc/s1600/DSC09737.JPG");
+	background-size: cover;
+}
+#head{
+    height: 200px;
+}
+#middle{
+    margin-top: 60px;
+	margin-bottom: 60px;
+}
+#box{
+	width: 500px;
+	height: 50px;
+	margin: 0 auto;
+	background-color: rgba(250, 250, 250, 0.178);
+}
+#box:hover{
+	background-color: rgba(250,250,250,0.8);
+}
+#box_content h2{
+	font-size: 200%;
+	text-align: center;
+	line-height: 50px;
+	color: rgb(255,255,255);
+	margin-left:100px; 
+}
+
+#footer{
+	width: 100vw;
+	position: absolute;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.527);
+}
+#footer h5{
+	font-size: 160%;
+	padding-bottom: 20px;
+	font-weight: bolder;
+	color:rgb(180,180,180);
+}
+#footer li{
+	line-height: 25px;
+	color: rgb(140,140,140);
+	font-family: Microsoft JhengHei;
+	font-size: 100%;
+	text-align: justify;
+}
+#title{
+    padding-top: 100px;
+	padding-bottom: 100px;
+	text-align: center;
+}
+
+#title h1{
+	font-size: 300%;
+	color:rgb(120,120,120);
+	letter-spacing: 10px;
+}
+#about{
+    width: 50%;
+	float: left;
+}
+#about_content{
+	padding: 20px;
+	padding-right: 50px;
+}
+#mask{
+	width: 1000px;
+	height: 500px;
+	margin: 0 auto;
+	background-color: rgba(250, 250, 250, 0.178);
+}
+button{
+	-moz-animation-duration: 3s;
+    -moz-animation-name: slidein;
+	font-size: 200%;
+	margin-left:80px;
+	margin-top:3px;  
+	color: darkgrey;
+}
+@-moz-keyframes slidein {
+    from {
+      margin-left: 100%;
+      width: 300%
+    }
+    
+    to {
+      margin-left: 0%;
+      width: 100%;
+    }
+  }

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $("#mask").hide();
+          $("button").click(function(){
+          $("#mask").show();
+          $("#middle").hide();
+          $("#head").hide();
+          });
+        });
+        </script>
+    <title>高雄 Easy Park</title>
+</head>
+<body>
+        
+    <div id="wrapper">
+        <div id="mask">
+                
+        </div>  
+        <div id="head">
+            <div id="title">
+                <h1>高雄 Parking</h1>
+            </div>
+        </div>
+        <div id="middle">
+            <div id="box">
+                <div id="box_content">
+                    <h2 style="float:left">快速查詢停車位</h2>
+                    <button class="animated infinite bounce" type="button">go</button>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div id="about">
+                <div id="about_content">
+                    <h5>About US</h5>
+                    <ul>
+                        <li>高雄大學資訊管理學系</li>
+                        <li>WEB前端專案開發</li>
+                        <li>All rights reserved</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
