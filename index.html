@@ -36,13 +36,12 @@
     <div id="wrapper">
         <div id="mask">
             <div id="map"></div>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsoDUzZYrgIBKvxoE8623vkToMa-1TI4U&callback=initMap"></script>
             <select name="" id="carsize">
                 <option value="all">全找</option>
-                <option value="big">大型車</option>
-                <option value="small">小型車</option>
-                <option value="motor">機車</option>
-                <option value="bike">腳踏車</option>
+                <option value="大型車車位">大型車</option>
+                <option value="小型車車位">小型車</option>
+                <option value="機車車位">機車</option>
+                <option value="腳踏車">腳踏車</option>
             </select>
             <select name="" id="zone">
                 <option value="高雄全區">高雄全區</option>
@@ -110,6 +109,7 @@
             </div>
         </div>
     </div>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsoDUzZYrgIBKvxoE8623vkToMa-1TI4U&callback=initMap"></script>
 </body>
 </html>
 <script>
@@ -120,6 +120,7 @@
         var privatemarker=[];
         var privatevehicle=[];
         var publicvehicle=[];
+        var markers=[];
         var infowindow;
         var zone;
         var carsize;
@@ -158,7 +159,7 @@
                     infowindow.close();
                 }
                 infowindow = new google.maps.InfoWindow();
-                infowindow.setContent("2");
+                infowindow.setContent(InfoContent(park));
                 //info park[e]
                 infowindow.open(map, markers[e]);
                 markers[e].setAnimation(google.maps.Animation.BOUNCE);
@@ -182,27 +183,88 @@
             var panorama = new  google.maps.StreetViewPanorama(
             document.getElementById("street"), panoramaOptions);  
         }
+        function cleanMarker(markers) {
+            for (var i = 0; i < markers.length; i++) {
+                if (markers[i]) {
+                    markers[i].setMap(null);
+                }
+            }
+            markers = [];
+        }
+
+        function InfoContent(marker_position){
+            console.log(marker_position);
+            var html="<div>";
+            for(var key in marker_position){
+                html+="<p>"+key+"   "+marker_position[key]+"</p>";
+            }
+            html+="</div>";
+            return html;
+        }
+        
+        function findzone(zone){
+            var array=[];
+            console.log(zone);
+            if(zone=="高雄全區"){
+                $.each(governpark,function(i,value){
+                    array.push(value);
+                });
+                $.each(privatepark,function(i,value){
+                    array.push(value);
+                });
+                return array;
+            }else{
+                $.each(governpark,function(i,value){
+                    if(value.行政區==zone){
+                        array.push(value);
+                    }
+                });
+                $.each(privatepark,function(i,value){
+                    if(value.行政區==zone){
+                        array.push(value);
+                    }
+                });
+                return array;
+            }
+        }
+        
+        function findcar(array,size){
+            var newarray=[];
+            if(size=="all"){
+                return array;
+            }else{
+                $.each(array,function(i,value){
+                    if(value[size] !='' && value[size] != null &&value[size] !=0){
+                        newarray.push(value);
+                    }
+                });
+                return newarray;
+            }
+        }
+
         $("#carsize").on("change",function(){
             carsize=$(this).val();
-            console.log(carsize);
             zone=$("#zone").val();
-            console.log(zone);
-            if(carsize =="big"){
-                
-            }else if(carsize =="small"){
-                console.log(2);
-            }else if(carsize=="motor"){
-                console.log(3);
-            }else if(carsize=="bike"){
-    
-            }else{
-    
-            }
+            var car=findzone(zone);
+            car=findcar(car,carsize);
+            cleanMarker(governmarker);
+            cleanMarker(privatemarker);
+            cleanMarker(markers);
+            $.each(car,function(i,value){
+                addMarker(i,value,markers,"http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
+            });
         });
-        $("#street").on("change",function(){
+        $("#zone").on("change",function(){
             zone=$(this).val();
             carsize=$("#carsize").val();
-    
+            var car=findzone(zone);
+            car=findcar(car,carsize);
+            cleanMarker(governmarker);
+            cleanMarker(privatemarker);
+            cleanMarker(markers);
+            $.each(car,function(i,value){
+                addMarker(i,value,markers,"http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
+            });
         });
     
         $(document).ready(function () {
