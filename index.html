@@ -31,13 +31,17 @@
                 height:5%;
             }
             #street li{
-                line-height: 50px;
+                line-height: 40px;
                 color: rgb(140,140,140);
                 font-family: Microsoft JhengHei;
                 font-size: 150%;
                 text-align: center;
             }
             @media (max-width:720px){
+                #wrapper{
+                    height: 130%;
+	                background-size: cover;
+                }
                 #map{
                     width: 100%;
                     height: 60%;
@@ -46,11 +50,16 @@
                 #street{
                     float: none;
                     width:100%;
-                    height:35%;
+                    height: auto;
                 }
                 select{
                     height: 5%;
                     width:49.5%;
+                    position: relative;
+                    bottom: 0;
+                }
+                #street li{
+                    font-size: 20px;
                 }
             }
         </style>
@@ -64,8 +73,11 @@
                 <ul>
                     <li style="font-size:200%;color:white;">WEB前端專案開發</li>
                     <li>A1057113 黃智輝</li>
-                    <li>A1053304 林承翰</li>
-                    <li>M1063114 鄭常紅</li>
+                    <li>A1053314 林承翰</li>
+                    <li>W1065504 鄭常紅</li>
+                    <li><img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" alt="">:停車位>300</li>
+                    <li><img src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png" alt="">:停車位>80</li>
+                    <li><img src="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" alt="">:停車位<80</li>
                 </ul>
             </div>
                 <select name="" id="carsize">
@@ -130,13 +142,14 @@
                     <ul>
                         <li style="font-size:20px;color:white">WEB前端專案開發</li>
                         <li>A1057113 黃智輝</li>
-                        <li>A1053304 林承翰</li>
-                        <li>M1063114 鄭常紅</li>
+                        <li>A1053314 林承翰</li>
+                        <li>W1065504 鄭常紅</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+    <div class="clear"></div>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsoDUzZYrgIBKvxoE8623vkToMa-1TI4U&callback=initMap"></script>
 </body>
 </html>
@@ -296,7 +309,7 @@
             cleanMarker(privatemarker);
             cleanMarker(markers);
             $.each(car,function(i,value){
-                addMarker(i,value,markers,"http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
+                addMarker(i,value,markers);
             });
         });
         $("#zone").on("change",function(){
@@ -308,7 +321,7 @@
             cleanMarker(privatemarker);
             cleanMarker(markers);
             $.each(car,function(i,value){
-                addMarker(i,value,markers,"http://maps.google.com/mapfiles/ms/icons/purple-dot.png");
+                addMarker(i,value,markers);
             });
         });
     
