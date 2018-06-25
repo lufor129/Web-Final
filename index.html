@@ -43,6 +43,25 @@
                 font-size: 150%;
                 text-align: center;
             }
+            #schedule{
+                margin-top:3%;
+                display: inline-block;
+                padding: 9px 12px;
+                padding-top: 7px;
+                margin-bottom: 0;
+                font-size: 14px;
+                line-height: 20px;
+                color: #5e5e5e;
+                text-align: center;
+                vertical-align: middle;
+                cursor: pointer;
+                background-color: #d1dade;
+                transition: all 0.12s linear 0s !important;
+                font: 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+                color: #fff;
+                background-color: #5cb85c;
+                border-color: #4cae4c;
+            }
             @media (max-width:720px){
                 #wrapper{
                     height: 100%;
@@ -60,7 +79,7 @@
                 }
                 #street li{
                     font-size: 20px;
-                    line-height: 120%;
+                    line-height: 100%;
                 }
                 div#selector{
                     width:  100%;
@@ -262,11 +281,13 @@
         }
 
         function InfoContent(marker_position){
+            var destination=marker_position["緯度"]+","+marker_position["經度"];
             console.log(marker_position);
             var html="<div>";
             for(var key in marker_position){
                 html+="<p>"+key+" : "+marker_position[key]+"</p>";
             }
+            html+="<a href='https://maps.google.com.tw/?saddr=&daddr="+destination+"'><button id='schedule'>規劃路線</button></a>";
             html+="</div>";
             return html;
         }
